@@ -150,6 +150,8 @@ model KonfigSistem {
   logoUrl       String?
   nominalKas    Int      @default(20000)
   tahunAktif    String   @default("2026")
+  tahunAjaran   String   @default("2025/2026")
+  semester      String   @default("Ganjil")
   updatedAt     DateTime @updatedAt
   @@map("konfig_sistem")
 }

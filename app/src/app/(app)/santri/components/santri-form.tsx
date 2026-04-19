@@ -7,7 +7,9 @@ import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -28,8 +30,12 @@ export type SantriData = {
   divisi: string;
 };
 
-const KELAS_OPTIONS = ["X", "XI", "XII"];
-const DIVISI_OPTIONS = ["IPA 1", "IPA 2", "IPS 1", "IPS 2", "Bahasa"];
+export const KELAS_OPTIONS = {
+  X: ["X.1", "X.2", "X.3", "X.4"],
+  XI: ["XI.1", "XI.2", "XI.3", "XI.4"],
+  XII: ["XII.1", "XII.2", "XII.3", "XII.4"],
+};
+export const DIVISI_OPTIONS = ["Ikhwan", "Akhwat"];
 
 type Props = {
   open: boolean;
@@ -41,7 +47,7 @@ type Props = {
 export function SantriFormDialog({ open, onClose, onSuccess, initial }: Props) {
   const isEdit = !!initial?.id;
   const [form, setForm] = useState<SantriData>(
-    initial ?? { nomorInduk: "", nama: "", kelas: "", divisi: "" }
+    initial ?? { nomorInduk: "", nama: "", kelas: "X.1", divisi: "Ikhwan" }
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -109,8 +115,13 @@ export function SantriFormDialog({ open, onClose, onSuccess, initial }: Props) {
                   <SelectValue placeholder="Pilih kelas" />
                 </SelectTrigger>
                 <SelectContent>
-                  {KELAS_OPTIONS.map((k) => (
-                    <SelectItem key={k} value={k}>{k}</SelectItem>
+                  {(Object.entries(KELAS_OPTIONS) as [string, string[]][]).map(([tingkat, list]) => (
+                    <SelectGroup key={tingkat}>
+                      <SelectLabel>Kelas {tingkat}</SelectLabel>
+                      {list.map((k) => (
+                        <SelectItem key={k} value={k}>{k}</SelectItem>
+                      ))}
+                    </SelectGroup>
                   ))}
                 </SelectContent>
               </Select>

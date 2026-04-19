@@ -44,7 +44,7 @@ export type TransaksiPayload = {
   santriId?: string;
 };
 
-const DIVISI_OPTIONS = ["IPA 1", "IPA 2", "IPS 1", "IPS 2", "Bahasa"];
+const DIVISI_OPTIONS = ["Ikhwan", "Akhwat"];
 
 type Santri = { id: string; nama: string; nomorInduk: string };
 

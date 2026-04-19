@@ -41,7 +41,7 @@ type Transaksi = {
   santri?: { nama: string; nomorInduk: string } | null;
 };
 
-const DIVISI_OPTIONS = ["IPA 1", "IPA 2", "IPS 1", "IPS 2", "Bahasa"];
+const DIVISI_OPTIONS = ["Ikhwan", "Akhwat"];
 
 const fmt = (n: number) =>
   new Intl.NumberFormat("id-ID", {

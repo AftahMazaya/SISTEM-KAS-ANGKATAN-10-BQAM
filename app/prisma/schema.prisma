@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  nama      String
+  password  String
+  roles     String[]
+  linkTtd   String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sessions  Session[]
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiredAt DateTime
+  createdAt DateTime @default(now())
+  @@map("sessions")
+}
+
+model Santri {
+  id         String   @id @default(cuid())
+  nomorInduk String   @unique
+  nama       String
+  kelas      String
+  divisi     String
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  konfirmasi KonfirmasiKas[]
+  transaksi  Transaksi[]
+  @@map("santri")
+}
+
+model Transaksi {
+  id         String   @id @default(cuid())
+  tanggal    DateTime
+  tipe       String
+  nominal    Int
+  keterangan String
+  divisi     String
+  santriId   String?
+  santri     Santri?  @relation(fields: [santriId], references: [id])
+  inputBy    String
+  notaUrl    String?
+  createdAt  DateTime @default(now())
+  @@map("transaksi")
+}
+
+model KonfirmasiKas {
+  id           String    @id @default(cuid())
+  santriId     String
+  santri       Santri    @relation(fields: [santriId], references: [id])
+  tanggal      DateTime  @default(now())
+  catatan      String?
+  prioritas    String    @default("Normal")
+  tujuan       String    @default("Bendahara")
+  status       String    @default("Menunggu Verifikasi")
+  catatanVerif String?
+  verifiedBy   String?
+  verifiedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  @@map("konfirmasi_kas")
+}
+
+model Rka {
+  id              String    @id @default(cuid())
+  namaKegiatan    String
+  divisi          String
+  nominal         Int
+  tanggal         DateTime
+  statusBndhr     String    @default("Menunggu")
+  statusKetua     String    @default("Menunggu")
+  pengaju         String
+  catatanBndhr    String?
+  catatanKetua    String?
+  approvedBndhr   String?
+  approvedKetua   String?
+  approvedBndhrAt DateTime?
+  approvedKetuaAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  items           RkaItem[]
+  @@map("rka")
+}
+
+model RkaItem {
+  id          String @id @default(cuid())
+  rkaId       String
+  rka         Rka    @relation(fields: [rkaId], references: [id], onDelete: Cascade)
+  uraian      String
+  satuan      String
+  jumlah      Int
+  hargaSatuan Int
+  @@map("rka_item")
+}
+
+model ApprovalTransaksi {
+  id              String    @id @default(cuid())
+  tanggal         DateTime
+  keterangan      String
+  nominal         Int
+  divisi          String
+  pengaju         String
+  statusBndhr     String    @default("Menunggu")
+  statusKetua     String    @default("Menunggu")
+  catatanBndhr    String?
+  catatanKetua    String?
+  approvedBndhrAt DateTime?
+  approvedKetuaAt DateTime?
+  createdAt       DateTime  @default(now())
+  @@map("approval_transaksi")
+}
+
+model LiburKas {
+  id        String   @id @default(cuid())
+  bulan     Int
+  tahun     Int
+  divisi    String
+  alasan    String?
+  createdBy String
+  createdAt DateTime @default(now())
+  @@unique([bulan, tahun, divisi])
+  @@map("libur_kas")
+}
+
+model KonfigSistem {
+  id            String   @id @default("singleton")
+  appTitle      String   @default("Sistem Kas Angkatan Artsacala")
+  appSubtitle   String   @default("Kas Angkatan")
+  appInstansi   String   @default("MA IT Baitul Qur'an Al Jahra Magetan")
+  appOrganisasi String   @default("Angkatan Artsacala")
+  appAlamat     String?
+  appEmail      String?
+  appHp         String?
+  logoUrl       String?
+  nominalKas    Int      @default(20000)
+  tahunAktif    String   @default("2026")
+  updatedAt     DateTime @updatedAt
+  @@map("konfig_sistem")
+}

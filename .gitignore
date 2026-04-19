@@ -1,0 +1,6 @@
+.env
+db/
+app/node_modules/
+app/.next/
+app/.env
+app/actions-runner/

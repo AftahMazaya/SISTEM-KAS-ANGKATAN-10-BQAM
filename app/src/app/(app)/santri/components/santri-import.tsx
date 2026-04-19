@@ -47,8 +47,9 @@ function parseCSV(text: string): Row[] {
   const rows: Row[] = [];
   for (let i = 1; i < lines.length; i++) {
     const cols = lines[i].split(",").map((c) => c.trim().replace(/^"|"$/g, ""));
-    const [nomorInduk = "", rawNama = "", kelas = "", divisi = ""] = cols;
+    const [nomorInduk = "", rawNama = "", kelas = "", rawDivisi = ""] = cols;
     const nama = toTitleCase(rawNama);
+    const divisi = toTitleCase(rawDivisi.toLowerCase());
 
     let error: string | undefined;
     if (!nomorInduk) error = "Nomor induk kosong";

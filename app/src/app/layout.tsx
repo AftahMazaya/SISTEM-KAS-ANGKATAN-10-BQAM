@@ -3,7 +3,7 @@ import { Geist } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
 
-const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
+const geist = Geist({ variable: "--font-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Sistem Kas Artsacala",

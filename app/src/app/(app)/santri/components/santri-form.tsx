@@ -52,8 +52,12 @@ export function SantriFormDialog({ open, onClose, onSuccess, initial }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  function toTitleCase(str: string) {
+    return str.replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+
   function set(field: keyof SantriData, value: string) {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    setForm((prev) => ({ ...prev, [field]: field === "nama" ? toTitleCase(value) : value }));
   }
 
   async function handleSubmit(e: React.FormEvent) {

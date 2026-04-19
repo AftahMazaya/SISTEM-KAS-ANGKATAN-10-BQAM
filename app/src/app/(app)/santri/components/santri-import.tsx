@@ -36,6 +36,10 @@ type ImportResult = {
   errors: { nomorInduk: string; error: string }[];
 };
 
+function toTitleCase(str: string) {
+  return str.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 function parseCSV(text: string): Row[] {
   const lines = text.split(/\r?\n/).filter((l) => l.trim());
   if (lines.length < 2) return [];
@@ -43,7 +47,8 @@ function parseCSV(text: string): Row[] {
   const rows: Row[] = [];
   for (let i = 1; i < lines.length; i++) {
     const cols = lines[i].split(",").map((c) => c.trim().replace(/^"|"$/g, ""));
-    const [nomorInduk = "", nama = "", kelas = "", divisi = ""] = cols;
+    const [nomorInduk = "", rawNama = "", kelas = "", divisi = ""] = cols;
+    const nama = toTitleCase(rawNama);
 
     let error: string | undefined;
     if (!nomorInduk) error = "Nomor induk kosong";

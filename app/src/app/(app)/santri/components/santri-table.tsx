@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Plus, Search, Pencil, Trash2, Loader2, GraduationCap } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, Loader2, GraduationCap, FileUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,6 +32,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { SantriFormDialog, type SantriData } from "./santri-form";
+import { SantriImportDialog } from "./santri-import";
 
 type Santri = {
   id: string;
@@ -53,6 +54,7 @@ export function SantriTable({ canEdit }: { canEdit: boolean }) {
   const [naikOpen, setNaikOpen] = useState(false);
   const [luluskan, setLuluskan] = useState(false);
   const [naik, setNaik] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -129,6 +131,12 @@ export function SantriTable({ canEdit }: { canEdit: boolean }) {
             <Button variant="outline" onClick={() => setNaikOpen(true)}>
               <GraduationCap className="mr-2 h-4 w-4" />
               Naik Kelas
+            </Button>
+          )}
+          {canEdit && (
+            <Button variant="outline" onClick={() => setImportOpen(true)}>
+              <FileUp className="mr-2 h-4 w-4" />
+              Import CSV
             </Button>
           )}
           {canEdit && (
@@ -223,6 +231,12 @@ export function SantriTable({ canEdit }: { canEdit: boolean }) {
         onClose={() => setFormOpen(false)}
         onSuccess={fetchData}
         initial={editData}
+      />
+
+      <SantriImportDialog
+        open={importOpen}
+        onClose={() => setImportOpen(false)}
+        onSuccess={fetchData}
       />
 
       {/* Dialog Naik Kelas */}

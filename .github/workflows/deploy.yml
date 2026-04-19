@@ -8,12 +8,14 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Pull latest code
+        run: |
+          cd /opt/kas-artsacala
+          git pull origin main
 
       - name: Build & Deploy
-        working-directory: /opt/kas-artsacala
         run: |
+          cd /opt/kas-artsacala
           docker compose build app
           docker compose up -d app
           docker image prune -f

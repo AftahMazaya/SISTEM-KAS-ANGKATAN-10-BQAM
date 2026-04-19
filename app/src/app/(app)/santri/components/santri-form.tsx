@@ -31,9 +31,9 @@ export type SantriData = {
 };
 
 export const KELAS_OPTIONS = {
-  X: ["X.1", "X.2", "X.3", "X.4"],
-  XI: ["XI.1", "XI.2", "XI.3", "XI.4"],
-  XII: ["XII.1", "XII.2", "XII.3", "XII.4"],
+  X: ["X.A", "X.B", "X.C", "X.D"],
+  XI: ["XI.A", "XI.B", "XI.C", "XI.D"],
+  XII: ["XII.A", "XII.B", "XII.C", "XII.D"],
 };
 export const DIVISI_OPTIONS = ["Ikhwan", "Akhwat"];
 
@@ -47,7 +47,7 @@ type Props = {
 export function SantriFormDialog({ open, onClose, onSuccess, initial }: Props) {
   const isEdit = !!initial?.id;
   const [form, setForm] = useState<SantriData>(
-    initial ?? { nomorInduk: "", nama: "", kelas: "X.1", divisi: "Ikhwan" }
+    initial ?? { nomorInduk: "", nama: "", kelas: "X.A", divisi: "Ikhwan" }
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

@@ -64,9 +64,9 @@ function parseCSV(text: string): Row[] {
 function downloadTemplate() {
   const header = "nomorInduk,nama,kelas,divisi";
   const example = [
-    "001,Ahmad Fauzi,X.1,Ikhwan",
-    "002,Siti Aisyah,X.3,Akhwat",
-    "003,Budi Santoso,X.2,Ikhwan",
+    "250421,Ahmad Fauzi,X.A,Ikhwan",
+    "250422,Siti Aisyah,X.C,Akhwat",
+    "250423,Budi Santoso,X.B,Ikhwan",
   ].join("\n");
   const blob = new Blob([header + "\n" + example], { type: "text/csv" });
   const url = URL.createObjectURL(blob);

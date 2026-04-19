@@ -6,8 +6,8 @@ import { prisma } from "@/lib/prisma";
 type S = { id: string; kelas: string };
 
 const NAIK: Record<string, string> = {
-  "X.1": "XI.1", "X.2": "XI.2", "X.3": "XI.3", "X.4": "XI.4",
-  "XI.1": "XII.1", "XI.2": "XII.2", "XI.3": "XII.3", "XI.4": "XII.4",
+  "X.A": "XI.A", "X.B": "XI.B", "X.C": "XI.C", "X.D": "XI.D",
+  "XI.A": "XII.A", "XI.B": "XII.B", "XI.C": "XII.C", "XI.D": "XII.D",
 };
 
 export async function POST(req: NextRequest) {

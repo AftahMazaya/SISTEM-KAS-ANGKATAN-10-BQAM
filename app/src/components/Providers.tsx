@@ -1,8 +1,12 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-// Wrapper agar semua Client Component bisa pakai useSession()
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <SessionProvider>{children}</SessionProvider>;
+  return (
+    <SessionProvider>
+      <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
+    </SessionProvider>
+  );
 }
